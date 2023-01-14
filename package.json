@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite --host",
-    "build": "tsc && vite build",
+    "build": "tsc && vite build --base /sensors --outDir docs",
     "preview": "vite preview"
   },
   "devDependencies": {
