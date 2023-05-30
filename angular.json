@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/sensors",
+            "outputPath": "dist/sensors/browser",
             "index": "projects/sensors/src/index.html",
             "main": "projects/sensors/src/main.ts",
             "polyfills": [
@@ -100,6 +100,78 @@
               "projects/sensors/src/styles.scss"
             ],
             "scripts": []
+          }
+        },
+        "server": {
+          "builder": "@angular-devkit/build-angular:server",
+          "options": {
+            "outputPath": "dist/sensors/server",
+            "main": "projects/sensors/src/main.server.ts",
+            "tsConfig": "projects/sensors/tsconfig.server.json",
+            "inlineStyleLanguage": "scss"
+          },
+          "configurations": {
+            "production": {
+              "outputHashing": "media"
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "sourceMap": true,
+              "extractLicenses": false,
+              "vendorChunk": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "app-shell": {
+          "builder": "@angular-devkit/build-angular:app-shell",
+          "options": {
+            "route": "shell"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "sensors:build:production",
+              "serverTarget": "sensors:server:production"
+            },
+            "development": {
+              "browserTarget": "sensors:build:development",
+              "serverTarget": "sensors:server:development"
+            }
+          },
+          "defaultConfiguration": "production"
+        }
+      }
+    },
+    "@sensorim/sensor": {
+      "projectType": "library",
+      "root": "projects/sensorim/sensor",
+      "sourceRoot": "projects/sensorim/sensor/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/sensorim/sensor/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/sensorim/sensor/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/sensorim/sensor/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "tsConfig": "projects/sensorim/sensor/tsconfig.spec.json",
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
+            ]
           }
         }
       }
